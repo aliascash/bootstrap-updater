@@ -12,6 +12,7 @@
 # ============================================================================
 
 currentDate=$(date +%Y-%m-%d)
+cd
 
 echo "Wipe out current bootstrap content"
 rm -rf ~/bootstrap-data
@@ -34,6 +35,7 @@ echo "Done"
 echo "Create bootstrap archive"
 cd ~/bootstrap-data
 zip ~/Spectrecoin-Blockchain-${currentDate}.zip .
+cd - >/dev/null
 echo "Done"
 
 if [[ $1 = '-u' ]] ; then
