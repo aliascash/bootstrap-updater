@@ -41,5 +41,5 @@ echo "Done"
 
 if [[ $1 = '-u' ]] ; then
     shift
-    scp ~/Spectrecoin-Blockchain-${currentDate}.zip download.spectreproject.io:/var/www/html/files/bootstrap/
+    scp ~/Spectrecoin-Blockchain-${currentDate}.zip jenkins@download.spectreproject.io:/var/www/html/files/bootstrap/
 fi
