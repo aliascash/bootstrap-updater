@@ -15,6 +15,7 @@ currentDate=$(date +%Y-%m-%d)
 cd
 
 echo "Wipe out current bootstrap content"
+rm -f ~/Spectrecoin-Blockchain-*.zip
 rm -rf ~/bootstrap-data
 mkdir -p ~/bootstrap-data/txleveldb
 echo "Done"
