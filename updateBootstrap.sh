@@ -41,6 +41,9 @@ echo "Done"
 
 if [[ $1 = '-u' ]] ; then
     shift
+    echo "Upload bootstrap archive"
     scp ~/Spectrecoin-Blockchain-${currentDate}.zip jenkins@download.spectreproject.io:/var/www/html/files/bootstrap/
+    echo "Updating download link"
     ssh jenkins@download.spectreproject.io "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChain.zip && ln -s Spectrecoin-Blockchain-${currentDate}.zip BootstrapChain.zip"
+    echo "Done"
 fi
