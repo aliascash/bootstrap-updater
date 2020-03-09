@@ -34,7 +34,7 @@ echo "Done"
 
 echo "Create bootstrap archive"
 cd ~/bootstrap-data
-zip ~/Spectrecoin-Blockchain-${currentDate}.zip .
+zip ~/Spectrecoin-Blockchain-${currentDate}.zip -r .
 cd - >/dev/null
 echo "Done"
 
