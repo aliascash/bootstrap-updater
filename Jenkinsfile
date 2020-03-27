@@ -45,6 +45,17 @@ pipeline {
                 }
             }
         }
+        stage('Create and upload bootstrap archive (testnet)') {
+            steps {
+                sshagent(['upload-to-download-site']) {
+                    sh(
+                            script: """
+                                ./updateBootstrap.sh -t -u
+                            """
+                    )
+                }
+            }
+        }
     }
     post {
         success {
