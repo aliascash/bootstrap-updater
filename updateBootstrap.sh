@@ -57,6 +57,6 @@ if [[ $1 = '-u' ]] ; then
     echo "Upload bootstrap archive"
     scp ~/Spectrecoin${testnet2}-Blockchain-${currentDate}.zip jenkins@download.spectreproject.io:/var/www/html/files/bootstrap/
     echo "Updating download link"
-    ssh jenkins@download.spectreproject.io "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChainTestnet.zip && ln -s Spectrecoin${testnet2}-Blockchain-${currentDate}.zip BootstrapChainTestnet.zip"
+    ssh jenkins@download.spectreproject.io "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChain${testnet2}.zip && ln -s Spectrecoin${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
     echo "Done"
 fi
