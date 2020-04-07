@@ -56,6 +56,17 @@ pipeline {
                 }
             }
         }
+        stage('Cleanup old archives') {
+            steps {
+                sshagent(['upload-to-download-site']) {
+                    sh(
+                            script: """
+                                ssh jenkins@download.spectreproject.io "find /var/www/html/files/bootstrap/ -name '*.zip' -type f -mtime +3 -exec rm -f {} \\;"
+                            """
+                    )
+                }
+            }
+        }
     }
     post {
         success {
