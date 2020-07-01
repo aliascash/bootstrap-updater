@@ -6,8 +6,8 @@
 # DESCRIPTION:  Helper script to update bootstrap data automatically
 #
 # AUTHOR:       HLXEasy
-# PROJECT:      https://spectreproject.io/
-#               https://github.com/spectrecoin/bootstrap-updater
+# PROJECT:      https://alias.cash/
+#               https://github.com/aliascash/bootstrap-updater
 #
 # ============================================================================
 
@@ -28,35 +28,35 @@ if [[ $1 = '-t' ]] ; then
 fi
 
 echo "Wipe out current bootstrap content"
-rm -f ~/Spectrecoin${testnet2}-Blockchain-*.zip
+rm -f ~/Alias${testnet2}-Blockchain-*.zip
 rm -rf ~/bootstrap-data${testnet3}
 mkdir -p ~/bootstrap-data${testnet3}/txleveldb
 echo "Done"
 
-echo "Stop Spectrecoin daemon"
-sudo systemctl stop spectrecoind${testnet3}
+echo "Stop Alias daemon"
+sudo systemctl stop aliasd${testnet3}
 echo "Done"
 
 echo "Copy current blockchain and transaction db"
-cp ~/.spectrecoin${testnet1}/blk0001.dat ~/bootstrap-data${testnet3}/
-cp ~/.spectrecoin${testnet1}/txleveldb/*.ldb ~/.spectrecoin${testnet1}/txleveldb/*.log ~/.spectrecoin${testnet1}/txleveldb/CURRENT ~/.spectrecoin${testnet1}/txleveldb/MANIFEST-* ~/bootstrap-data${testnet3}/txleveldb/
+cp ~/.aliaswallet${testnet1}/blk0001.dat ~/bootstrap-data${testnet3}/
+cp ~/.aliaswallet${testnet1}/txleveldb/*.ldb ~/.aliaswallet${testnet1}/txleveldb/*.log ~/.aliaswallet${testnet1}/txleveldb/CURRENT ~/.aliaswallet${testnet1}/txleveldb/MANIFEST-* ~/bootstrap-data${testnet3}/txleveldb/
 echo "Done"
 
-echo "Start Spectrecoin daemon"
-sudo systemctl start spectrecoind${testnet3}
+echo "Start Alias daemon"
+sudo systemctl start aliasd${testnet3}
 echo "Done"
 
 echo "Create bootstrap archive"
 cd ~/bootstrap-data${testnet3}
-zip ~/Spectrecoin${testnet2}-Blockchain-${currentDate}.zip -r .
+zip ~/Alias${testnet2}-Blockchain-${currentDate}.zip -r .
 cd - >/dev/null
 echo "Done"
 
 if [[ $1 = '-u' ]] ; then
     shift
     echo "Upload bootstrap archive"
-    scp ~/Spectrecoin${testnet2}-Blockchain-${currentDate}.zip jenkins@download.spectreproject.io:/var/www/html/files/bootstrap/
+    scp ~/Alias${testnet2}-Blockchain-${currentDate}.zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/
     echo "Updating download link"
-    ssh jenkins@download.spectreproject.io "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChain${testnet2}.zip && ln -s Spectrecoin${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
+    ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChain${testnet2}.zip && ln -s Alias${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
     echo "Done"
 fi
