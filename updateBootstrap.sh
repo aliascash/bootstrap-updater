@@ -3,6 +3,10 @@
 #
 # FILE:         updateBootstrap.sh
 #
+# SPDX-FileCopyrightText: © 2020 Alias Developers
+# SPDX-FileCopyrightText: © 2016 SpectreCoin Developers
+# SPDX-License-Identifier: MIT
+#
 # DESCRIPTION:  Helper script to update bootstrap data automatically
 #
 # AUTHOR:       HLXEasy
