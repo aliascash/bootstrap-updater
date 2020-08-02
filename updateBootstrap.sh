@@ -16,7 +16,7 @@
 # ============================================================================
 
 currentDate=$(date +%Y-%m-%d)
-cd
+cd || exit
 
 testnet1=''
 testnet2=''
@@ -51,16 +51,17 @@ sudo systemctl start aliasd${testnet3}
 echo "Done"
 
 echo "Create bootstrap archive"
-cd ~/bootstrap-data${testnet3}
-zip ~/Alias${testnet2}-Blockchain-${currentDate}.zip -r .
-cd - >/dev/null
+cd ~/bootstrap-data${testnet3} || exit
+zip ~/Alias${testnet2}-Blockchain-"${currentDate}".zip -r .
+cd - >/dev/null || exit
 echo "Done"
 
 if [[ $1 = '-u' ]] ; then
     shift
     echo "Upload bootstrap archive"
-    scp ~/Alias${testnet2}-Blockchain-${currentDate}.zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/
+    scp ~/Alias${testnet2}-Blockchain-"${currentDate}".zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/
     echo "Updating download link"
+    # shellcheck disable=SC2029
     ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChain${testnet2}.zip && ln -s Alias${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
     echo "Done"
 fi
