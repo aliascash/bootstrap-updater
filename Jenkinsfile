@@ -66,7 +66,7 @@ pipeline {
                 sshagent(['upload-to-download-site']) {
                     sh(
                             script: """
-                                ssh jenkins@download.alias.cash "find /var/www/html/files/bootstrap/ -name '*.zip' -type f -mtime +3 -exec rm -f {} \\;"
+                                ssh jenkins@download.alias.cash "find /var/www/html/files/bootstrap/ -name '*.zip' -type f -mtime +2 -exec rm -f {} \\;"
                             """
                     )
                 }
