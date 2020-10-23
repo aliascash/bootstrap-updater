@@ -1,4 +1,9 @@
 #!groovy
+// SPDX-FileCopyrightText: © 2020 Alias Developers
+// SPDX-FileCopyrightText: © 2016 SpectreCoin Developers
+//
+// SPDX-License-Identifier: MIT
+
 
 pipeline {
     agent {
@@ -61,7 +66,7 @@ pipeline {
                 sshagent(['upload-to-download-site']) {
                     sh(
                             script: """
-                                ssh jenkins@download.spectreproject.io "find /var/www/html/files/bootstrap/ -name '*.zip' -type f -mtime +3 -exec rm -f {} \\;"
+                                ssh jenkins@download.alias.cash "find /var/www/html/files/bootstrap/ -name '*.zip' -type f -mtime +3 -exec rm -f {} \\;"
                             """
                     )
                 }
@@ -81,7 +86,7 @@ pipeline {
                     )
                 }
                 discordSend(
-                        description: "Build #$env.BUILD_NUMBER successfully created and uploaded Spectrecoin bootstrap archive",
+                        description: "Build #$env.BUILD_NUMBER successfully created and uploaded Alias bootstrap archive",
                         image: '',
                         link: "$env.BUILD_URL",
                         successful: true,
