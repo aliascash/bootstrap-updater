@@ -38,7 +38,7 @@ mkdir -p ~/bootstrap-data${testnet3}/txleveldb
 echo "Done"
 
 echo "Stop Alias daemon"
-sudo systemctl stop aliasd${testnet3}
+sudo systemctl stop aliaswalletd${testnet3}
 echo "Done"
 
 echo "Copy current blockchain and transaction db"
@@ -47,7 +47,7 @@ cp ~/.aliaswallet${testnet1}/txleveldb/*.ldb ~/.aliaswallet${testnet1}/txleveldb
 echo "Done"
 
 echo "Start Alias daemon"
-sudo systemctl start aliasd${testnet3}
+sudo systemctl start aliaswalletd${testnet3}
 echo "Done"
 
 echo "Create bootstrap archive"
