@@ -19,8 +19,7 @@ pipeline {
         cron('H 2 * * *')
     }
     environment {
-        GITHUB_TOKEN = credentials('cdc81429-53c7-4521-81e9-83a7992bca76')
-        DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
+        DISCORD_WEBHOOK = credentials('DISCORD_WEBHOOK')
     }
     stages {
         stage('Notification') {
@@ -30,7 +29,7 @@ pipeline {
                 discordSend(
                         description: "Started build #$env.BUILD_NUMBER",
                         image: '',
-                        link: "$env.BUILD_URL",
+//                        link: "$env.BUILD_URL",
                         successful: true,
                         result: "ABORTED",
                         thumbnail: 'https://wiki.jenkins-ci.org/download/attachments/2916393/headshot.png',
@@ -88,7 +87,7 @@ pipeline {
                 discordSend(
                         description: "Build #$env.BUILD_NUMBER successfully created and uploaded Alias bootstrap archive",
                         image: '',
-                        link: "$env.BUILD_URL",
+//                        link: "$env.BUILD_URL",
                         successful: true,
                         thumbnail: 'https://wiki.jenkins-ci.org/download/attachments/2916393/headshot.png',
                         title: "$env.JOB_NAME",
@@ -107,7 +106,7 @@ pipeline {
             discordSend(
                     description: "Build #$env.BUILD_NUMBER finished unstable",
                     image: '',
-                    link: "$env.BUILD_URL",
+//                    link: "$env.BUILD_URL",
                     successful: true,
                     result: "UNSTABLE",
                     thumbnail: 'https://wiki.jenkins-ci.org/download/attachments/2916393/headshot.png',
@@ -126,7 +125,7 @@ pipeline {
             discordSend(
                     description: "Build #$env.BUILD_NUMBER failed!",
                     image: '',
-                    link: "$env.BUILD_URL",
+//                    link: "$env.BUILD_URL",
                     successful: false,
                     thumbnail: 'https://wiki.jenkins-ci.org/download/attachments/2916393/headshot.png',
                     title: "$env.JOB_NAME",
@@ -137,7 +136,7 @@ pipeline {
             discordSend(
                     description: "Build #$env.BUILD_NUMBER was aborted",
                     image: '',
-                    link: "$env.BUILD_URL",
+//                    link: "$env.BUILD_URL",
                     successful: true,
                     result: "ABORTED",
                     thumbnail: 'https://wiki.jenkins-ci.org/download/attachments/2916393/headshot.png',
