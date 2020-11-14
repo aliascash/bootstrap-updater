@@ -60,6 +60,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Cleanup old archives') {
             steps {
                 sshagent(['upload-to-download-site']) {
@@ -71,6 +72,7 @@ pipeline {
                 }
             }
         }
+        */
     }
     post {
         success {
