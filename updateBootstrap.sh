@@ -83,9 +83,9 @@ if [[ $1 = '-u' ]] ; then
     echo "Upload bootstrap archive"
     scp ~/Alias${testnet2}-Blockchain-"${currentDate}".zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || exit 1
 
-    echo "Updating download link"
+    echo "Remove old archive and update download link"
     # shellcheck disable=SC2029
-    ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChain${testnet2}.zip && ln -s Alias${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
+    ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f \$(readlink BootstrapChain${testnet2}.zip) && rm -f BootstrapChain${testnet2}.zip && ln -s Alias${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
 
     echo "Upload split bootstrap archives"
     scp ~/Alias${testnet2}-Blockchain-"${currentDate}".part.* jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || exit 1
