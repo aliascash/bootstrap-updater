@@ -90,7 +90,8 @@ if [[ $1 = '-u' ]] ; then
     echo "Upload split bootstrap archives"
     scp ~/Alias${testnet2}-Blockchain-"${currentDate}".part.* jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || exit 1
 
-    # ToDo: Links for split archives
+    echo "Updating index link for split archives"
+    ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChainParts${testnet2}.txt && ln -s Alias${testnet2}-Blockchain-${currentDate}.part.txt BootstrapChainParts${testnet2}.txt"
 
     echo "Done"
 fi
