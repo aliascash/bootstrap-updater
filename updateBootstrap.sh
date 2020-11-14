@@ -76,7 +76,7 @@ if [[ $1 = '-u' ]] ; then
     shift
 
     echo "Cleanup previous bootstrap on download server"
-    scp "${ownLocation}"/cleanupBootstrapArchives.sh jenkins@download.alias.cash:/home/jenkins/ || exit 1
+    scp "${ownLocation}"/cleanupBootstrapArchives.sh "${ownLocation}"/cleanupAndRecreateLinks.sh jenkins@download.alias.cash:/home/jenkins/ || exit 1
     # shellcheck disable=SC2029
     ssh jenkins@download.alias.cash "/home/jenkins/cleanupBootstrapArchives.sh ${testnet4}"
 
@@ -85,7 +85,7 @@ if [[ $1 = '-u' ]] ; then
 
     echo "Remove old archive and update download link"
     # shellcheck disable=SC2029
-    ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f \$(readlink BootstrapChain${testnet2}.zip) && rm -f BootstrapChain${testnet2}.zip && ln -s Alias${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
+    ssh jenkins@download.alias.cash "/home/jenkins/cleanupAndRecreateLinks.sh ${testnet4}"
 
     echo "Upload split bootstrap archives"
     scp ~/Alias${testnet2}-Blockchain-"${currentDate}".part.* jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || exit 1
