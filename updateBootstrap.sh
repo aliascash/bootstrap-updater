@@ -67,14 +67,16 @@ echo "Done"
 if [[ $1 = '-u' ]] ; then
     shift
     echo "Upload bootstrap archive"
-    scp ~/Alias${testnet2}-Blockchain-"${currentDate}".zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/
+    scp ~/Alias${testnet2}-Blockchain-"${currentDate}".zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || die 23 "Unable to transfer bootstrap archive"
 
     echo "Updating download link"
     # shellcheck disable=SC2029
     ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChain${testnet2}.zip && ln -s Alias${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
 
     echo "Upload split bootstrap archives"
-    scp ~/Alias${testnet2}-Blockchain-"${currentDate}".part.* jenkins@download.alias.cash:/var/www/html/files/bootstrap/
+    scp ~/Alias${testnet2}-Blockchain-"${currentDate}".part.* jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || die 23 "Unable to transfer bootstrap split archives"
+
+    # ToDo: Links for split archives
 
     echo "Done"
 fi
