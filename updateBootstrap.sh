@@ -32,7 +32,8 @@ if [[ $1 = '-t' ]] ; then
 fi
 
 echo "Wipe out current bootstrap content"
-rm -f ~/Alias${testnet2}-Blockchain-*.zip
+rm -f ~/Alias${testnet2}-Blockchain-*.z*
+rm -f ~/Alias${testnet2}-Blockchain-*.txt
 rm -rf ~/bootstrap-data${testnet3}
 mkdir -p ~/bootstrap-data${testnet3}/txleveldb
 echo "Done"
@@ -52,7 +53,14 @@ echo "Done"
 
 echo "Create bootstrap archive"
 cd ~/bootstrap-data${testnet3} || exit
+
+# Create one big archive
 zip ~/Alias${testnet2}-Blockchain-"${currentDate}".zip -r .
+
+# Create split archive and index file
+zip ~/Alias${testnet2}-Blockchain-"${currentDate}".part.zip -r -s 100m .
+for i in Alias"${testnet2}"-Blockchain-"${currentDate}".z* ; do echo "$i" ; done > Alias${testnet2}-Blockchain-"${currentDate}".part.txt
+
 cd - >/dev/null || exit
 echo "Done"
 
@@ -60,8 +68,13 @@ if [[ $1 = '-u' ]] ; then
     shift
     echo "Upload bootstrap archive"
     scp ~/Alias${testnet2}-Blockchain-"${currentDate}".zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/
+
     echo "Updating download link"
     # shellcheck disable=SC2029
     ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChain${testnet2}.zip && ln -s Alias${testnet2}-Blockchain-${currentDate}.zip BootstrapChain${testnet2}.zip"
+
+    echo "Upload split bootstrap archives"
+    scp ~/Alias${testnet2}-Blockchain-"${currentDate}".part.* jenkins@download.alias.cash:/var/www/html/files/bootstrap/
+
     echo "Done"
 fi
