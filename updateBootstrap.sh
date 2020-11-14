@@ -15,12 +15,18 @@
 #
 # ============================================================================
 
+# Backup where we came from
+callDir=$(pwd)
+ownLocation="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+scriptName=$(basename $0)
+
 currentDate=$(date +%Y-%m-%d)
 cd || exit
 
 testnet1=''
 testnet2=''
 testnet3=''
+testnet4=''
 
 # Check if testnet bootstrap should be created
 if [[ $1 = '-t' ]] ; then
@@ -29,6 +35,7 @@ if [[ $1 = '-t' ]] ; then
     testnet1='/testnet'
     testnet2='-Testnet'
     testnet3='-testnet'
+    testnet4='-t'
 fi
 
 echo "Wipe out current bootstrap content"
@@ -67,6 +74,12 @@ echo "Done"
 
 if [[ $1 = '-u' ]] ; then
     shift
+
+    echo "Cleanup previous bootstrap on download server"
+    scp "${ownLocation}"/cleanupBootstrapArchives.sh jenkins@download.alias.cash:/home/jenkins/ || exit 1
+    # shellcheck disable=SC2029
+    ssh jenkins@download.alias.cash "/home/jenkins/cleanupBootstrapArchives.sh ${testnet4}"
+
     echo "Upload bootstrap archive"
     scp ~/Alias${testnet2}-Blockchain-"${currentDate}".zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || exit 1
 
