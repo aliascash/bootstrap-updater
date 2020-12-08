@@ -65,7 +65,7 @@ cd ~/bootstrap-data${testnet3} || exit 1
 zip ~/Alias${testnet2}-Blockchain-"${currentDate}".zip -r .
 
 # Create split archive and index file
-zip ~/Alias${testnet2}-Blockchain-"${currentDate}".part.zip -r -s 100m .
+zip ~/Alias${testnet2}-Blockchain-"${currentDate}".part.zip -r -s 50m .
 cd ~ || exit 1
 for i in Alias"${testnet2}"-Blockchain-"${currentDate}".part.z* ; do sha256sum "$i" | tee -a ~/Alias${testnet2}-Blockchain-"${currentDate}".part.txt ; done
 
