@@ -7,7 +7,7 @@
 
 pipeline {
     agent {
-        label 'bootstrap-updater'
+        label 'bootstrap-updater_NEW'
     }
     options {
         timestamps()
