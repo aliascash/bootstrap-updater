@@ -76,22 +76,21 @@ if [[ $1 = '-u' ]] ; then
     shift
 
     echo "Cleanup previous bootstrap on download server"
-    scp "${ownLocation}"/cleanupBootstrapArchives.sh "${ownLocation}"/cleanupAndRecreateLinks.sh jenkins@download.alias.cash:/home/jenkins/ || exit 1
-    # shellcheck disable=SC2029
-    ssh jenkins@download.alias.cash "/home/jenkins/cleanupBootstrapArchives.sh ${testnet4}"
+    "${ownLocation}"/cleanupBootstrapArchives.sh ${testnet4}
 
-    echo "Upload bootstrap archive"
-    scp ~/Alias${testnet2}-Blockchain-"${currentDate}".zip jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || exit 1
+    echo "Installing bootstrap archive"
+    mv ~/Alias${testnet2}-Blockchain-"${currentDate}".zip /var/www/html/files/bootstrap/
 
     echo "Remove old archive and update download link"
-    # shellcheck disable=SC2029
-    ssh jenkins@download.alias.cash "/home/jenkins/cleanupAndRecreateLinks.sh ${testnet4}"
+    "${ownLocation}"/cleanupAndRecreateLinks.sh ${testnet4}
 
-    echo "Upload split bootstrap archives"
-    scp ~/Alias${testnet2}-Blockchain-"${currentDate}".part.* jenkins@download.alias.cash:/var/www/html/files/bootstrap/ || exit 1
+    echo "Installing split bootstrap archives"
+    mv ~/Alias${testnet2}-Blockchain-"${currentDate}".part.* /var/www/html/files/bootstrap/
 
     echo "Updating index link for split archives"
-    ssh jenkins@download.alias.cash "cd /var/www/html/files/bootstrap/ && rm -f BootstrapChainParts${testnet2}.txt && ln -s Alias${testnet2}-Blockchain-${currentDate}.part.txt BootstrapChainParts${testnet2}.txt"
+    cd /var/www/html/files/bootstrap/ || exit 1
+    rm -f BootstrapChainParts${testnet2}.txt && ln -s Alias${testnet2}-Blockchain-"${currentDate}".part.txt BootstrapChainParts${testnet2}.txt
+    cd - >/dev/null || exit
 
     echo "Done"
 fi
