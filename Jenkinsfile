@@ -42,7 +42,7 @@ pipeline {
             steps {
                 sh(
                         script: """
-                            ./updateBootstrap.sh -u
+                            ./updateBootstrap.sh
                         """
                 )
             }
@@ -51,7 +51,7 @@ pipeline {
             steps {
                 sh(
                         script: """
-                            ./updateBootstrap.sh -t -u
+                            ./updateBootstrap.sh -t
                         """
                 )
             }
