@@ -17,6 +17,11 @@ The created archive will contains the following:
 * `blk0001.dat` - Main blockchain data file
 * `txleveldb/*` - Folder txleveldb with the transaction database
 
+Additionally a split archive will be created, where each chunk is 50M in
+size. This is used for bootstrapping on mobile phones, where the connection
+might drop. With this approach only the file with the connection drop
+needs to be downloaded again.
+
 ## Requirements
 * Alias wallet already running and in sync
 * Used account with sudo permission to stop and start the wallet
