@@ -38,41 +38,24 @@ pipeline {
                 )
             }
         }
-        stage('Create and upload bootstrap archive') {
+        stage('Create and install bootstrap archive') {
             steps {
-                sshagent(['upload-to-download-site']) {
-                    sh(
-                            script: """
-                                ./updateBootstrap.sh -u
-                            """
-                    )
-                }
+                sh(
+                        script: """
+                            ./updateBootstrap.sh -u
+                        """
+                )
             }
         }
-        stage('Create and upload bootstrap archive (testnet)') {
+        stage('Create and install bootstrap archive (testnet)') {
             steps {
-                sshagent(['upload-to-download-site']) {
-                    sh(
-                            script: """
-                                ./updateBootstrap.sh -t -u
-                            """
-                    )
-                }
+                sh(
+                        script: """
+                            ./updateBootstrap.sh -t -u
+                        """
+                )
             }
         }
-        /*
-        stage('Cleanup old archives') {
-            steps {
-                sshagent(['upload-to-download-site']) {
-                    sh(
-                            script: """
-                                ssh jenkins@download.alias.cash "find /var/www/html/files/bootstrap/ -name '*.zip' -type f -mtime +2 -exec rm -f {} \\;"
-                            """
-                    )
-                }
-            }
-        }
-        */
     }
     post {
         success {
