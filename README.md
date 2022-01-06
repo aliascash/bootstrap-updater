@@ -25,4 +25,3 @@ needs to be downloaded again.
 ## Requirements
 * Alias wallet already running and in sync
 * Used account with sudo permission to stop and start the wallet
-
