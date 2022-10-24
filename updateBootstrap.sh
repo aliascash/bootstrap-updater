@@ -51,6 +51,9 @@ echo "Done"
 
 echo "Copy current blockchain and transaction db"
 cp ~/.aliaswallet${testnet1}/blk0001.dat ~/bootstrap-data${testnet3}/
+if [[ -f ~/.aliaswallet${testnet1}/blk0002.dat ]] ; then
+    cp ~/.aliaswallet${testnet1}/blk0002.dat ~/bootstrap-data${testnet3}/
+fi
 cp ~/.aliaswallet${testnet1}/txleveldb/*.ldb ~/.aliaswallet${testnet1}/txleveldb/*.log ~/.aliaswallet${testnet1}/txleveldb/CURRENT ~/.aliaswallet${testnet1}/txleveldb/MANIFEST-* ~/bootstrap-data${testnet3}/txleveldb/
 echo "Done"
 
